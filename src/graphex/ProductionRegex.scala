@@ -1,8 +1,17 @@
 package graphex
 
-class ProductionRegex(regexCharList: List[Char]) extends Production {
+class ProductionRegex extends Production {
 
-  // constructor stuff
+  val prodBlock = new ProductionBlock
+  var prodRegex: Option[ProductionRegex] = None
+
+  if (Parser.regexCharList.nonEmpty) {
+    val character = Parser.regexCharList.head
+    if (character == '|') {
+      Parser.regexCharList = Parser.regexCharList.tail
+      prodRegex = Some(new ProductionRegex)
+    }
+  }
 
   override def createNFA: NFA = ???
 

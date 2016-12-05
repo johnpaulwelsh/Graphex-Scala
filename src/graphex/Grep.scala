@@ -1,7 +1,6 @@
 package graphex
 
 object Grep {
-
   var REGEX = ""
   var FILENAME = ""
 
@@ -31,12 +30,29 @@ object Grep {
     GraphViz.WriteGraphSource(gv, outputFile)
   }
 
-  def grep(): Unit = {
-    println("yo")
+  def grep(isDFA: Boolean, outputFile: String, regex: String, file: String): Unit = {
+    println("yo1")
   }
 
-  def main(args: Array[String]) = {
-    println("hello world")
-    grep()
+  def grep(nfaFile: String, dfaFile: String, regex: String, file: String): Unit = {
+    println("yo2")
+  }
+
+  def grep(regex: String, file: String): Unit = {
+    REGEX = regex
+    FILENAME = file
+    def nfa = parseAndRetrieveNFA
+    println(nfa)
+  }
+
+  def parseAndRetrieveNFA: NFA = Parser.nfa
+
+  def main(args: Array[String]): Unit = {
+    if (args(0) == "-n") {
+      if (args(2) == "-d")      grep(args(1), args(3), args(4), args(5))
+      else                      grep(false,   args(1), args(2), args(3))
+
+    } else if (args(0) == "-d") grep(true,    args(1), args(2), args(3))
+    else                        grep(args(0), args(1))
   }
 }
